@@ -11,16 +11,16 @@ rm(list = ls(all.names = TRUE))
 #     NB: The files CMI_read.r, the CMI data files and R-function file
 #         
 ##############################SET.SEED.#############
-set.seed(6505586)          # Change 123456 to be the project coordinator ID !!!
+set.seed(123456)          # Change 123456 to be the project coordinator ID !!!
 ####################################################
 ############## Do not modify this part below!!!! ########
 library(MASS)
 library('Rcmdr')
 source("CMI_read.r")
 YEAR <- sample(Year, 1); 
-DTH <- Dth[Age > 38, Year == YEAR]
-EXP <- Exp[Age > 38, Year == YEAR]
-AGE <- Age[Age > 38]
+DTH <- Dth[Age > 36, Year == YEAR]
+EXP <- Exp[Age > 36, Year == YEAR]
+AGE <- Age[Age > 36]
 Obs <- log(DTH/EXP)
 Future.Life <- read.table("Future_Life_6_c.csv", header=TRUE, sep=",")
 pool<-c("Factor1","Factor2","Factor3","Factor4","Factor5");pool
@@ -102,15 +102,14 @@ Runs <- function(n1, n2, g){
 #     ================================================
 #
 #
-############## Do not modify this part above!!!! ########
+############## Do not modify the above part !!!! ########
 #####################################################
 ############start your code below ################
 #####################################################/
 #Note : 1. Use Obs as the response values for mortality rate in logarithmic scale
-#       2. In scenario 2, use x1 and x2 as your explanatory variable,
+#       2. In scenario 2, use x1, x2, and/or x3 as your explanatory variables,
 #                      use Benefit as your response variable
 #       
-#---------------------------------------------------------------------------------------
 
 # Scenario 1
 
@@ -207,6 +206,7 @@ plot(x3,Benefit, xlab = "x3", ylab = "Benefit")
 lines(x3,SLR2$coef[1]+SLR2$coef[2]*x3, col = "red")
 summary(SLR2)
 plot(SLR2)
+
 ### Outliers
 T.SLR2 <- rstudent(SLR2)
 plot(SLR2$coef[1]+SLR2$coef[2]*x3, T.SLR2, xlab = "y_hat", ylab = "Studentized Residual")
