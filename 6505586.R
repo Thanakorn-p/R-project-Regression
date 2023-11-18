@@ -11,7 +11,7 @@ rm(list = ls(all.names = TRUE))
 #     NB: The files CMI_read.r, the CMI data files and R-function file
 #         
 ##############################SET.SEED.#############
-set.seed(123456)          # Change 123456 to be the project coordinator ID !!!
+set.seed(6505586)          # Change 123456 to be the project coordinator ID !!!
 ####################################################
 ############## Do not modify this part below!!!! ########
 library(MASS)
@@ -133,7 +133,7 @@ NewData <- data.frame(AGE=pre_age)
 Predict <- predict(SLR, NewData, interval="prediction", level=.93)
 Predict
 exp(Predict[1])*100#point estimate of the prediction
-exp(Predict[2])*100#
+exp(Predict[2])*100
 exp(Predict[3])*100
 #Predict[2] and Predict[3]: These typically represent 
 #the lower and upper bounds of the prediction interval.
@@ -228,4 +228,5 @@ plot(x3_A,Future.Life_1$Benefit, xlab = "x3_A", ylab = "Benefit")
 lines(x3_A,model_A$coef[1]+model_A$coef[2]*x3_A, col = "red")
 summary(model_A)
 model_A$coef
+
 
