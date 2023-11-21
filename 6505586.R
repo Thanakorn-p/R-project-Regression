@@ -123,7 +123,7 @@ SLR$coef
 ## Q2
 Z.x <- rstandard(SLR)
 qqnorm(Z.x, main = "Q-Q Plot", xlab = "Theoretical Quantiles", ylab = "Sample Quantiles")
-A <- -3:3
+A <- -3:3 # The line is drawn from -3 to 3 
 lines(A, A, col = "red")
 
 
@@ -140,7 +140,7 @@ exp(Predict[3])*100
 
 ## Q4
 Sign(Z.x)
-Runs.test(Z.x)
+#Runs.test(Z.x)
 
 ## Q5
 AGE2 = AGE^5
@@ -208,18 +208,22 @@ summary(SLR2)
 plot(SLR2)
 
 ### Outliers
-T.SLR2 <- rstudent(SLR2)
+T.SLR2 <- rstudent(SLR2)## Calculate Studentized residuals
+# Plot the predicted values (y_hat) against the Studentized residuals.
 plot(SLR2$coef[1]+SLR2$coef[2]*x3, T.SLR2, xlab = "y_hat", ylab = "Studentized Residual")
-OUTL.T <- T.SLR2[T.SLR2 > 2 | T.SLR2 < -2]
+# Identify outliers as those observations where the Studentized residuals
+# are greater than 2 or less than -2. 
+OUTL.T <- T.SLR2[T.SLR2 > 2 | T.SLR2 < -2]# Count and report the number of outliers detected.
 length(OUTL.T)
 ### Leverages
-hatval <- hatvalues(SLR2)
+hatval <- hatvalues(SLR2)# Calculate the leverage values 
 plot(Benefit,hatval)
 HAT <- hatval[hatval > (2*(1+1)/length(hatval))] #2(k+1)/n = 0.014545
 length(HAT)
 HAT
 ### Exclude the leverage
 library(tidyverse)
+# Exclude the 38th observation from the 'Future.Life' dataset. 
 Future.Life_1 <- Future.Life %>% slice(-38)
 x3_A <- Future.Life_1[,which(names(Future.Life_1)==X3)]
 model_A <- lm(Benefit ~ x3_A, data=Future.Life_1)
