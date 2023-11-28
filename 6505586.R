@@ -112,10 +112,13 @@ Runs <- function(n1, n2, g){
 #       
 
 # Scenario 1
+#install.packages("MASS")
+#install.packages("Rcmdr")
+#install.packages("tidyverse")
 
 ## Q1
 SLR <- lm(Obs ~ AGE)
-summary(SLR)
+#summary(SLR)
 SLR$coef
 #lm(y ~ x)
 
@@ -151,7 +154,7 @@ MLR$coef
 
 
 
-## Q6,Q7
+## Q6
 summary(SLR)
 summary(MLR)
 
@@ -159,7 +162,7 @@ summary(MLR)
 summary(MLR)
 
 ## Q8
-plot(AGE, Obs)
+plot(AGE, Obs,ylab = "log(mortality)")
 lines(AGE, SLR$coef[1]+SLR$coef[2]*AGE, col = "blue")
 lines(AGE, MLR$coef[1]+MLR$coef[2]*AGE1+MLR$coef[3]*AGE2, col = "green" )
 SLR$coef
@@ -215,16 +218,18 @@ plot(SLR2$coef[1]+SLR2$coef[2]*x3, T.SLR2, xlab = "y_hat", ylab = "Studentized R
 # are greater than 2 or less than -2. 
 OUTL.T <- T.SLR2[T.SLR2 > 2 | T.SLR2 < -2]# Count and report the number of outliers detected.
 length(OUTL.T)
+OUTL.T
 ### Leverages
 hatval <- hatvalues(SLR2)# Calculate the leverage values 
 plot(Benefit,hatval)
+length(hatval)
 HAT <- hatval[hatval > (2*(1+1)/length(hatval))] #2(k+1)/n = 0.014545
 length(HAT)
 HAT
 ### Exclude the leverage
 library(tidyverse)
-# Exclude the 38th observation from the 'Future.Life' dataset. 
-Future.Life_1 <- Future.Life %>% slice(-38)
+# Exclude the outlier and leverage observation from the 'Future.Life' dataset. 
+Future.Life_1 <- Future.Life %>% slice(-38,-74,-138,-152,-161,-172,-229,-232,-241,-242,-249)
 x3_A <- Future.Life_1[,which(names(Future.Life_1)==X3)]
 model_A <- lm(Benefit ~ x3_A, data=Future.Life_1)
 plot(model_A)
@@ -232,5 +237,4 @@ plot(x3_A,Future.Life_1$Benefit, xlab = "x3_A", ylab = "Benefit")
 lines(x3_A,model_A$coef[1]+model_A$coef[2]*x3_A, col = "red")
 summary(model_A)
 model_A$coef
-
 
